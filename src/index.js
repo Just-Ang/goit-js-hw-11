@@ -1,6 +1,7 @@
 // const axios = require('axios/dist/browser/axios.cjs');
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import Notiflix from 'notiflix';
 
 const formEl = document.querySelector('.search-form');
 const inputEl = document.querySelector('input[name="searchQuery"]');
@@ -27,41 +28,50 @@ let page = 1;
   fetchImg(inputValue, page).then(data => {
     console.log(data);
 
-    const items = data.hits
-      .map(
-        item => `<a class="gallery__item" href="${item.largeImageURL}" onclick="event.preventDefault()">
-        <div class="photo-card"> 
-        <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" loading="lazy" />
-        <div class="info">
-          <p class="info-item">
-            <b>likes: ${item.likes}s</b>
-          </p>
-          <p class="info-item">
-            <b >views: ${item.views}</b>
-          </p>
-          <p class="info-item">
-            <b>comments: ${item.comments}</b>
-          </p>
-          <p class="info-item">
-            <b > downloads: ${item.downloads}</b>
-          </p>
-        </div> </div>
- 
-    </a>`
-      )
-      .join('');
+    if (data.total === 0) {
+         return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+         
+    }
 
-    galleryEl.innerHTML = items;
-    var lightbox = new SimpleLightbox('.gallery a', {
-        captionSelector: 'img',
-        captionsData: 'alt',
-        captionPosition: 'bottom',
-        captionDelay: 250,
-        scrollZoom: false,
-      });
-    
+   if (data.total >= 1) {
+    Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    const items = data.hits
+    .map(
+      item => `<a class="gallery__item" href="${item.largeImageURL}" onclick="event.preventDefault()">
+      <div class="photo-card"> 
+      <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" loading="lazy" />
+      <div class="info">
+        <p class="info-item">
+          <b>likes: ${item.likes}s</b>
+        </p>
+        <p class="info-item">
+          <b >views: ${item.views}</b>
+        </p>
+        <p class="info-item">
+          <b>comments: ${item.comments}</b>
+        </p>
+        <p class="info-item">
+          <b > downloads: ${item.downloads}</b>
+        </p>
+      </div> </div>
+
+  </a>`
+    )
+    .join('');
+    moreBtn.style.opacity = "1";
+
+  galleryEl.innerHTML = items;
+  var lightbox = new SimpleLightbox('.gallery a', {
+      captionSelector: 'img',
+      captionsData: 'alt',
+      captionPosition: 'bottom',
+      captionDelay: 250,
+      scrollZoom: false,
+    });
+   }
+      
   });
-  moreBtn.style.opacity = "1";
+  
 }
 
 

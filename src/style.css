@@ -1,77 +1,67 @@
-
 :root {
   --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   --animation-duration: 250ms;
 }
 img {
-    display: block;
-    max-width: 100%;
-  }
+  display: block;
+  max-width: 100%;
+}
 
 .search-form {
-    display: flex;
-    justify-content: center;
-    background-color: rgb(102, 51, 62);
-    padding-top: 10px;
-    padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(102, 51, 62);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
-
 
 .gallery {
-    display: flex;
-    max-width: 1140px;
-    flex-wrap: wrap;
-    gap: 10px;
-    
-    margin: 30px auto 30px auto;
-  }
+  display: flex;
+  max-width: 1400px;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  margin: 30px auto 30px auto;
+}
 .gallery__item {
-    text-decoration: none;
-    width: 270px;
-    position: relative;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-  } 
+  text-decoration: none;
+  width: 340px;
+  position: relative;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.gallery__item:hover {
+  transform: scale(1.03);
+}
 .photo-card {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  transition: transform var(--animation-duration) var(--timing-function);
 }
-
-.photo {
- 
-    transition: transform var(--animation-duration) var(--timing-function);
-}
-
-.photo-card:hover {
-    transform: scale(1.03);
-  }
 
 .info {
-    display: flex;
-   
-    
+  margin-top: auto;
+  display: flex;
 }
 
 .info-item {
-    text-align: center;
-    color: black;
+  text-align: center;
+  color: black;
 }
 
-
 .load-more {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    padding: 10px 32px;
-    color:white;
-    background-color: rgb(102, 51, 62);
-    box-shadow: 0px 4px 4px rgba(0,0,0,.15);
-    border-radius: 4px;
-    border-color: rgb(102, 51, 62);
-    font-weight: 700;
-    font-size: 16px;
-    opacity: 0;
-    
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding: 10px 32px;
+  color: white;
+  background-color: rgb(102, 51, 62);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  border-color: rgb(102, 51, 62);
+  font-weight: 700;
+  font-size: 16px;
+  opacity: 0;
 }

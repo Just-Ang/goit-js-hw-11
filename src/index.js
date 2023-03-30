@@ -66,7 +66,10 @@ function onBtnClick() {
       console.log(data);
       markUp(data);
     })
-    .catch(error => {});
+    .catch(error => { Notiflix.Notify.warning(
+      "We're sorry, but you've reached the end of search results."
+    );
+    moreBtn.style.opacity = '0';});
 }
 
 function markUp(data) {

@@ -45,8 +45,9 @@ function onSubmitClick(e) {
       );
     }
 
-    if (40 > data.total >= 1) {
+    if ( data.total >= 1) {
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+      galleryEl.innerHTML='';
       markUp(data);
       moreBtn.style.opacity = '1';
     }

@@ -32,6 +32,12 @@ function onSubmitClick(e) {
   let page = 1;
   fetchImg(inputValue, page).then(data => {
     console.log(data);
+    if (data.total <= 40) {
+      moreBtn.style.opacity = '0';
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+      markUp(data);
+      return;
+    }
 
     if (data.total === 0) {
       return Notiflix.Notify.failure(
@@ -39,41 +45,10 @@ function onSubmitClick(e) {
       );
     }
 
-    if (data.total >= 1) {
+    if (40 > data.total >= 1) {
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-      const items = data.hits
-        .map(
-          item => `<a class="gallery__item" href="${item.largeImageURL}" onclick="event.preventDefault()">
-      <div class="photo-card"> 
-      <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" loading="lazy" width="340" height="200" />
-      <div class="info">
-        <p class="info-item">
-          <b>likes: ${item.likes}s</b>
-        </p>
-        <p class="info-item">
-          <b >views: ${item.views}</b>
-        </p>
-        <p class="info-item">
-          <b>comments: ${item.comments}</b>
-        </p>
-        <p class="info-item">
-          <b > downloads: ${item.downloads}</b>
-        </p>
-      </div> </div>
-
-  </a>`
-        )
-        .join('');
+      markUp(data);
       moreBtn.style.opacity = '1';
-
-      galleryEl.innerHTML = items;
-      var lightbox = new SimpleLightbox('.gallery a', {
-        captionSelector: 'img',
-        captionsData: 'alt',
-        captionPosition: 'bottom',
-        captionDelay: 250,
-        scrollZoom: false,
-      });
     }
   });
 }
@@ -83,12 +58,18 @@ moreBtn.addEventListener('click', onBtnClick);
 function onBtnClick() {
   pages += 1;
 
-  fetchImg(inputValue, pages).then(data => {
-    console.log(data);
+  fetchImg(inputValue, pages)
+    .then(data => {
+      console.log(data);
+      markUp(data);
+    })
+    .catch(error => {});
+}
 
-    const items = data.hits
-      .map(
-        item => `<a class="gallery__item" href="${item.largeImageURL}" onclick="event.preventDefault()">
+function markUp(data) {
+  const items = data.hits
+    .map(
+      item => `<a class="gallery__item" href="${item.largeImageURL}" onclick="event.preventDefault()">
         <div class="photo-card"> 
         <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" width="340" height="200" loading="lazy" />
         <div class="info">
@@ -107,22 +88,15 @@ function onBtnClick() {
         </div> </div>
  
     </a>`
-      )
-      .join('');
+    )
+    .join('');
 
-    galleryEl.insertAdjacentHTML('beforeend', items);
-    var lightbox = new SimpleLightbox('.gallery a', {
-      captionSelector: 'img',
-      captionsData: 'alt',
-      captionPosition: 'bottom',
-      captionDelay: 250,
-      scrollZoom: false,
-    });
-
-
-  }).catch(error => {
-  
+  galleryEl.insertAdjacentHTML('beforeend', items);
+  var lightbox = new SimpleLightbox('.gallery a', {
+    captionSelector: 'img',
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
+    scrollZoom: false,
   });
-
-
 }

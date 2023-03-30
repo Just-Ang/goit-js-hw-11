@@ -33,6 +33,7 @@ function onSubmitClick(e) {
   fetchImg(inputValue, page).then(data => {
     console.log(data);
     if (data.total <= 40) {
+      galleryEl.innerHTML='';
       moreBtn.style.opacity = '0';
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
       markUp(data);
@@ -40,6 +41,7 @@ function onSubmitClick(e) {
     }
 
     if (data.total === 0) {
+      galleryEl.innerHTML='';
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );

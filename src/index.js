@@ -19,7 +19,10 @@ async function fetchImg(name, pagee) {
     const pictures = await response.json();
     return pictures;
   } catch (error) {
-    console.log(error.message);
+    Notiflix.Notify.warning(
+      "We're sorry, but you've reached the end of search results."
+    );
+    moreBtn.style.opacity = '0';
   }
 }
 
@@ -42,7 +45,7 @@ function onSubmitClick(e) {
         .map(
           item => `<a class="gallery__item" href="${item.largeImageURL}" onclick="event.preventDefault()">
       <div class="photo-card"> 
-      <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" loading="lazy" />
+      <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" loading="lazy" width="340" height="200" />
       <div class="info">
         <p class="info-item">
           <b>likes: ${item.likes}s</b>
@@ -87,7 +90,7 @@ function onBtnClick() {
       .map(
         item => `<a class="gallery__item" href="${item.largeImageURL}" onclick="event.preventDefault()">
         <div class="photo-card"> 
-        <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" loading="lazy" />
+        <img src="${item.webformatURL}" alt="${item.tags}" title="${item.tags}" class="photo" width="340" height="200" loading="lazy" />
         <div class="info">
           <p class="info-item">
             <b>likes: ${item.likes}s</b>
@@ -115,5 +118,11 @@ function onBtnClick() {
       captionDelay: 250,
       scrollZoom: false,
     });
+
+
+  }).catch(error => {
+  
   });
+
+
 }

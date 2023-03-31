@@ -12,18 +12,12 @@ let pages = 1;
 formEl.addEventListener('submit', onSubmitClick);
 let inputValue = '';
 async function fetchImg(name, pagee) {
-  try {
+
     const response = await fetch(
       `https://pixabay.com/api/?key=34821995-346cc43bb02fb642b37e66530&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${pagee}`
     );
     const pictures = await response.json();
     return pictures;
-  } catch (error) {
-    Notiflix.Notify.warning(
-      "We're sorry, but you've reached the end of search results."
-    );
-    moreBtn.style.opacity = '0';
-  }
 }
 
 function onSubmitClick(e) {
@@ -34,7 +28,7 @@ function onSubmitClick(e) {
     console.log(data);
     if (data.total <= 40) {
       galleryEl.innerHTML='';
-      moreBtn.style.opacity = '0';
+      moreBtn.classList.add('is-hidden');
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
       markUp(data);
       return;
@@ -51,7 +45,7 @@ function onSubmitClick(e) {
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
       galleryEl.innerHTML='';
       markUp(data);
-      moreBtn.style.opacity = '1';
+      moreBtn.classList.remove('is-hidden');
     }
   });
 }
@@ -65,17 +59,18 @@ function onBtnClick() {
     .then(data => {
       console.log(data);
       markUp(data);
-      if (data.hits.length === 0) {
+      if (data.hits.length < 40) {
+        markUp(data);
         Notiflix.Notify.warning(
           "We're sorry, but you've reached the end of search results.")
-        moreBtn.style.opacity = '0';
+        moreBtn.classList.add('is-hidden');
         return;
       } 
     })
     .catch(error => { Notiflix.Notify.warning(
       "We're sorry, but you've reached the end of search results."
     );
-    moreBtn.style.opacity = '0';});
+    moreBtn.classList.add('is-hidden');});
 }
 
 function markUp(data) {

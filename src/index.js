@@ -1,4 +1,4 @@
-const axios = require('axios/dist/browser/axios.cjs');
+import axios from 'axios'
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
@@ -65,6 +65,12 @@ function onBtnClick() {
     .then(data => {
       console.log(data);
       markUp(data);
+      if (data.hits.length === 0) {
+        Notiflix.Notify.warning(
+          "We're sorry, but you've reached the end of search results.")
+        moreBtn.style.opacity = '0';
+        return;
+      } 
     })
     .catch(error => { Notiflix.Notify.warning(
       "We're sorry, but you've reached the end of search results."

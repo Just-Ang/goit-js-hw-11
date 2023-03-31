@@ -41,12 +41,11 @@ input {
 }
 
 .gallery {
-  display: flex;
-  max-width: 1400px;
   flex-wrap: wrap;
-  gap: 10px;
-
-  margin: 30px auto 30px auto;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 60px 100px;
+    display: flex;
 }
 .gallery__item {
   text-decoration: none;
@@ -93,9 +92,14 @@ input {
   border-color: rgb(102, 51, 62);
   font-weight: 700;
   font-size: 16px;
-  opacity: 0;
 }
 .load-more:hover {
     background-color: rgb(83, 40, 49);
     transform: scale(1.03);
+}
+
+
+.is-hidden{
+  opacity: 0;
+  display: none;
 }
